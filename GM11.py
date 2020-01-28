@@ -16,7 +16,6 @@ def GM11(x,n,k):
     [[a],[b]] = np.dot(np.dot(np.linalg.inv(np.dot(B.T, B)), B.T), Y)#计算参数  
     imitate = list()
     predict = list()
-    print(type(x.shape[0]))
     if k==0:
         for index in range(1,x.shape[0]+1):
             imitate.append((x[0]-b/a)*np.exp(-a*(index-1))*(1-np.exp(a))) 
