@@ -34,24 +34,41 @@ def GM11(x,n,k):
             'predict':{'value':predict,'desc':'预测值'}
     } 
 
-st=input('请输入序列，用逗号（英文）隔开：')
+def FormatPrint(data,n):
+    '''
+    data是序列
+    n为保留的小数位数
+    '''
+    data2=list()
+    for d in data:
+        d=round(d,n)
+        data2.append(d)
+    return data2
+
+#输入指令
+st=input('请输入待模拟预测的序列，用逗号（英文）隔开：')
 data=list(map(eval,st.split(',')))#将字符串转化为数字
 print("您输入的数据是：",data)
-n=eval(input('请输入需预测的个数：'))
-k=eval(input('请选择计算时间相应式x0时，运用累减还原式or导数还原式（0表示累减还原式，1表示导数还原式）：'))
+n=eval(input('需预测的个数：'))#注意键盘输入的是字符串，需要转化为数字
+k=eval(input('请选择计算时间响应式x0时，运用累减还原式or导数还原式（0表示累减还原式，1表示导数还原式）：'))
 while k!=0 and k !=1:
     print("请重新输入：")
     k=input('请选择计算时间相应式x0时，运用累减还原式or导数还原式（0表示累减还原式，1表示导数还原式）：')
-    
+fd=eval(input('结果需保留的小数位数：'))
+
+#执行操作
 d=np.array(data)
 result = GM11(d,n,k)
 a=result['a']['value']
 b=result['b']['value']
 imitate=result['imitate']['value']
 predict=result['predict']['value']
+imitate=FormatPrint(imitate,fd)
+predict=FormatPrint(predict,fd)
 
-print('原始数据为：',data)
-print('a=',a)
-print('b=',b)
-print('imitate=',imitate)
-print('predict=',predict)
+#输出
+print('原始序列：',data)
+print('发展系数：a={:.2f}'.format(a))
+print('灰色作用量：b={:.2f}'.format(b))
+print('模拟序列：',imitate)
+print('预测序列：',predict)
