@@ -24,12 +24,15 @@ def GM11(x,n,k):
             der.append((x[0]-b/a)*np.exp(-a*index)*(pow(a,2)))
         for index in range(x.shape[0]+1,x.shape[0]+n+1):
             predict.append((x[0]-b/a)*np.exp(-a*(index-1))*(1-np.exp(a)))
+        for index in range(0,x.shape[0]+n):
+            der.append((x[0]-b/a)*np.exp(-a*index)*(pow(a,2)))
     else:
         for index in range(0,x.shape[0]):
             imitate.append((x[0]-b/a)*np.exp(-a*(index))*(-a)) 
-            der.append((x[0]-b/a)*np.exp(-a*index)*(pow(a,2)))
         for index in range(x.shape[0]+1,x.shape[0]+n+1):
-            predict.append((x[0]-b/a)*np.exp(-a*(index-1))*(-a))   
+            predict.append((x[0]-b/a)*np.exp(-a*(index-1))*(-a)) 
+        for index in range(0,x.shape[0]+n):
+            der.append((x[0]-b/a)*np.exp(-a*index)*(pow(a,2)))
     return {
             'a':{'value':a,'desc':'发展系数'},
             'b':{'value':b,'desc':'灰色作用量'},
@@ -49,7 +52,7 @@ def FormatPrint(data,n):
         data2.append(d)
     return data2
 
-#输入指令
+#输入
 st=input('请输入待模拟预测的序列，用逗号（英文）隔开：')
 data=list(map(eval,st.split(',')))#将字符串转化为数字
 print("您输入的数据是：",data)
@@ -71,10 +74,13 @@ der=result['der']['value']
 imitate=FormatPrint(imitate,fd)
 predict=FormatPrint(predict,fd)
 der=FormatPrint(der,fd)
+
 #输出
 print('原始序列：',data)
-print('发展系数：a={:.2f}'.format(a))
-print('灰色作用量：b={:.2f}'.format(b))
+print('发展系数：a=',a)
+print('灰色作用量：b=',b)
+#print('发展系数：a={:.2f}'.format(a))
+#print('灰色作用量：b={:.2f}'.format(b))
 print('模拟序列：',imitate)
 print('预测序列：',predict)
 print('x0斜率：',der)
