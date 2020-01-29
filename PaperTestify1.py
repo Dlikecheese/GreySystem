@@ -84,3 +84,4 @@ print('灰色作用量：b=',b)
 print('模拟序列：',imitate)
 print('预测序列：',predict)
 print('x0斜率：',der)
+
